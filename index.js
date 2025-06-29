@@ -21,9 +21,9 @@ app.get("/share/blog/:id", async (req, res) => {
 
     const blogUrl = `https://tri-legal-web.vercel.app/blogPost/${blogId}`;
     console.log("blogUrl blogUrl : ", blogUrl);
-    const imageUrl = blog.image?.startsWith("http")
-      ? blog.image
-      : `https://tri-legal-web.vercel.app${blog.image || "/default-blog.jpg"}`;
+    const imageUrl = blog.imageURL?.startsWith("http")
+      ? blog.imageURL
+      : "https://t3.ftcdn.net/jpg/01/07/15/58/360_F_107155820_NCUA4CtCkIDXXHnKAlWVzUvRjfMe0k5D.jpg";
     console.log("image Url : ", imageUrl);
     console.log("blog blog blog : ", blog);
     const metaDescription = blog.content
