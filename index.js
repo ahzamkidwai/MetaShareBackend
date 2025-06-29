@@ -8,7 +8,7 @@ app.get("/share/blog/:id", async (req, res) => {
   const blogId = req.params.id;
 
   // Replace this with your real API endpoint
-  const apiUrl = `https://blogs-ooi1.onrender.com"/api/v1/blogs`; // 👈 change this
+  const apiUrl = `https://blogs-ooi1.onrender.com/api/v1/blogs`; // 👈 change this
 
   try {
     const response = await fetch(apiUrl);
@@ -20,6 +20,7 @@ app.get("/share/blog/:id", async (req, res) => {
     }
 
     const blogUrl = `https://tri-legal-web.vercel.app/blogPost/${blogId}`;
+    console.log("blogUrl blogUrl : ", blogUrl);
     const imageUrl = blog.image?.startsWith("http")
       ? blog.image
       : `https://tri-legal-web.vercel.app${blog.image || "/default-blog.jpg"}`;
