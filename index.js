@@ -24,7 +24,7 @@ app.get("/share/blog/:id", async (req, res) => {
     const imageUrl = blog.image?.startsWith("http")
       ? blog.image
       : `https://tri-legal-web.vercel.app${blog.image || "/default-blog.jpg"}`;
-
+    console.log("image Url : ", imageUrl);
     const metaDescription = blog.content
       .replace(/(<([^>]+)>)/gi, "")
       .slice(0, 150);
