@@ -61,6 +61,10 @@ app.get("/share/blog/:id", async (req, res) => {
   }
 });
 
+app.get("/", async (req, res) => {
+  res.send("Hello Ji, Server is working fine.");
+});
+
 app.listen(PORT, () => {
   console.log(`✅ Server is running at http://localhost:${PORT}`);
 });
