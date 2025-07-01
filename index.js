@@ -1,13 +1,18 @@
 import express from "express";
 import fetch from "node-fetch";
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+import cors from "cors";
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(express.json());
+app.use(cors());
+
 app.get("/share/blog/:id", async (req, res) => {
   const blogId = req.params.id;
-
-  // Replace this with your actual blog API
   const apiUrl = `https://blogs-ooi1.onrender.com/api/v1/blogs`;
 
   try {
@@ -29,14 +34,12 @@ app.get("/share/blog/:id", async (req, res) => {
       .replace(/(<([^>]+)>)/gi, "")
       .slice(0, 150);
 
-    // 🧠 Detect if the request comes from a social media bot (Facebook, Twitter, Slack, etc.)
     const userAgent = req.get("User-Agent") || "";
     const isBot =
       /facebookexternalhit|Facebot|Twitterbot|Slackbot-LinkExpanding/i.test(
         userAgent
       );
 
-    // 🧾 Send HTML response with OG tags and conditional redirect
     res.send(`
       <!DOCTYPE html>
       <html lang="en">
@@ -78,6 +81,148 @@ app.get("/share/blog/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal server error");
+  }
+});
+
+const transporter = nodemailer.createTransport({
+  service: process.env.EMAIL_SERVICE || "gmail", // e.g., "gmail", "SendGrid"
+  auth: {
+    user: process.env.EMAIL_USER, // Your email (e.g., lawfirm@gmail.com)
+    pass: process.env.EMAIL_PASSWORD, // App password (for Gmail) or API key (SendGrid)
+  },
+});
+
+app.post("/api/schedule-consultation", async (req, res) => {
+  const { firstName, lastName, email, phone, message } = req.body;
+  const errors = {};
+
+  if (!firstName) errors.firstName = "First name is required.";
+  if (!lastName) errors.lastName = "Last name is required.";
+  if (!email) errors.email = "Email is required.";
+  if (!phone) errors.phone = "Phone number is required.";
+  if (!message) errors.message = "Message is required.";
+
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({
+      success: false,
+      errors,
+    });
+  }
+  try {
+    await transporter.sendMail({
+      from: `"Website Form" <${process.env.EMAIL_USER}>`,
+      to: process.env.LAW_FIRM_EMAIL,
+      subject: `New Consultation Request from ${firstName} ${lastName}`,
+      html: `
+  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 12px auto; padding: 40px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+
+    <!-- Header -->
+    <header style="text-align: center; margin-bottom: 30px;">
+      <h1 style="margin: 0; font-size: 32px; color: #1e293b;">VidhiVidh</h1>
+      <p style="margin: 8px 0 0; font-style: italic; font-size: 16px; color: #64748b;">Justice, Integrity, Expertise</p>
+    </header>
+
+    <!-- Title -->
+    <section>
+      <h2 style="color: #0f172a; font-size: 24px; margin-bottom: 10px;">📩 New Client Consultation Request</h2>
+      <p style="font-size: 16px; color: #334155; margin-bottom: 20px;">You’ve received a new consultation request from your website.</p>
+    </section>
+
+    <!-- Details Table -->
+    <table style="width: 100%; font-size: 16px; color: #1e293b; background-color: #ffffff; border-radius: 6px; padding: 16px; border: 1px solid #e2e8f0; border-collapse: collapse;">
+      <tbody>
+        <tr>
+          <td style="padding: 12px; font-weight: bold;">Name:</td>
+          <td style="padding: 12px;">${firstName} ${lastName}</td>
+        </tr>
+        <tr style="background-color: #f1f5f9;">
+          <td style="padding: 12px; font-weight: bold;">Email:</td>
+          <td style="padding: 12px;">${email}</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px; font-weight: bold;">Phone:</td>
+          <td style="padding: 12px;">${phone}</td>
+        </tr>
+        <tr style="background-color: #f1f5f9;">
+          <td style="padding: 12px; font-weight: bold; vertical-align: top;">Message:</td>
+          <td style="padding: 12px; font-style: italic;">${message}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Sent Time -->
+    <p style="margin-top: 20px; font-size: 14px; color: #64748b;">📅 Sent on: ${new Date().toLocaleString()}</p>
+
+    <!-- Divider -->
+    <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;" />
+
+    <!-- Footer -->
+    <footer style="font-size: 14px; color: #475569; text-align: center;">
+      <p style="margin-top: 20px; font-size: 12px; color: #94a3b8;">&copy; ${new Date().getFullYear()} VidhiVidh Law Firm. All rights reserved.</p>
+    </footer>
+
+  </div>
+  `,
+    });
+
+    await transporter.sendMail({
+      from: `"${process.env.LAW_FIRM_NAME}" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: `Thank You for Reaching Out – ${process.env.LAW_FIRM_NAME}`,
+      html: `
+  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 20px auto; padding: 40px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+    <header style="text-align: center; margin-bottom: 30px;">
+      <h1 style="margin: 0; font-size: 28px; color: #1e293b;">${
+        process.env.LAW_FIRM_NAME
+      }</h1>
+      <p style="font-size: 15px; color: #64748b;">Justice. Integrity. Expertise.</p>
+    </header>
+
+    <section>
+      <p style="font-size: 16px; color: #334155;">Dear <strong> ${firstName}</strong>,</p>
+      <p style="font-size: 16px; color: #334155; line-height: 1.6;">
+        Thank you for reaching out to <strong>${
+          process.env.LAW_FIRM_NAME
+        }</strong> for a legal consultation. 
+        We have received your request and one of our representatives will contact you shortly to discuss your concern further.
+      </p>
+      <p style="font-size: 16px; color: #334155; line-height: 1.6;">
+        <strong>Your Message:</strong><br/>
+        <span style="font-style: italic; background-color: #f1f5f9; display: block; padding: 10px; border-radius: 6px; margin-top: 6px;">
+          ${message}
+        </span>
+      </p>
+
+      <p style="font-size: 16px; color: #334155; margin-top: 24px;">
+        If you have any urgent queries, feel free to call us at the contact number mentioned on our website.
+      </p>
+
+      <p style="font-size: 16px; color: #334155; margin-top: 24px;">
+        Best regards,<br/>
+        <strong>${process.env.LAW_FIRM_NAME}</strong><br/>
+        Legal Team
+      </p>
+    </section>
+
+    <footer style="margin-top: 40px; font-size: 13px; text-align: center; color: #94a3b8;">
+      &copy; ${new Date().getFullYear()} ${
+        process.env.LAW_FIRM_NAME
+      }. All rights reserved.
+    </footer>
+  </div>
+  `,
+    });
+
+    res
+      .status(200)
+      .json({ success: true, message: "Email sent successfully." });
+  } catch (error) {
+    console.error("Email error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to send email",
+      error: error.message,
+    });
   }
 });
 
