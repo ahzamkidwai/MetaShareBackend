@@ -118,14 +118,8 @@ app.post("/api/schedule-consultation", async (req, res) => {
 
     <!-- Logo -->
     <div style="text-align: center; margin-bottom: 20px;">
-      <img src="cid:logo" alt="Law Firm Logo" style="width: 100px; height: auto;" />
+      <img src="cid:logo" alt="Law Firm Logo" style="width: 250px; height: auto;" />
     </div>
-
-    <!-- Header -->
-    <header style="text-align: center; margin-bottom: 30px;">
-      <h1 style="margin: 0; font-size: 32px; color: #CBA14A;">VidhiVidh</h1>
-      <p style="margin: 8px 0 0; font-style: italic; font-size: 16px; color: #D1D5DB;">Justice, Integrity, Expertise</p>
-    </header>
 
     <!-- Title -->
     <section>
@@ -186,15 +180,8 @@ app.post("/api/schedule-consultation", async (req, res) => {
     
     <!-- Logo at the top -->
     <div style="text-align: center; margin-bottom: 20px;">
-      <img src="cid:logo" alt="Law Firm Logo" style="width: 120px; height: auto;" />
+      <img src="cid:logo" alt="Law Firm Logo" style="width: 250px; height: auto;" />
     </div>
-
-    <header style="text-align: center; margin-bottom: 30px;">
-      <h1 style="margin: 0; font-size: 28px; color: #CBA14A;">${
-        process.env.LAW_FIRM_NAME
-      }</h1>
-      <p style="font-size: 15px; color: #D1D5DB;">Justice. Integrity. Expertise.</p>
-    </header>
 
     <section>
       <p style="font-size: 16px; color: #D9E0E8;">Dear <strong>${firstName}</strong>,</p>
