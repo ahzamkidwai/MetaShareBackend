@@ -116,9 +116,14 @@ app.post("/api/schedule-consultation", async (req, res) => {
       html: `
   <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 12px auto; padding: 40px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
 
+    <!-- Logo -->
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img src="cid:logo" alt="Law Firm Logo" style="width: 100px; height: auto;" />
+    </div>
+
     <!-- Header -->
     <header style="text-align: center; margin-bottom: 30px;">
-      <h1 style="margin: 0; font-size: 32px; color: #1e293b;">VidhiVidh</h1>
+      <h1 style="margin: 0; font-size: 32px; color: #CBA14A;">VidhiVidh</h1>
       <p style="margin: 8px 0 0; font-style: italic; font-size: 16px; color: #64748b;">Justice, Integrity, Expertise</p>
     </header>
 
@@ -129,23 +134,23 @@ app.post("/api/schedule-consultation", async (req, res) => {
     </section>
 
     <!-- Details Table -->
-    <table style="width: 100%; font-size: 16px; color: #1e293b; background-color: #ffffff; border-radius: 6px; padding: 16px; border: 1px solid #e2e8f0; border-collapse: collapse;">
+    <table style="width: 100%; font-size: 16px; color: #1e293b; background-color: #ffffff; border-radius: 6px; border-collapse: collapse; overflow: hidden; border: 1px solid #e2e8f0;">
       <tbody>
         <tr>
-          <td style="padding: 12px; font-weight: bold;">Name:</td>
-          <td style="padding: 12px;">${firstName} ${lastName}</td>
-        </tr>
-        <tr style="background-color: #f1f5f9;">
-          <td style="padding: 12px; font-weight: bold;">Email:</td>
-          <td style="padding: 12px;">${email}</td>
+          <td style="padding: 12px 16px; font-weight: bold; background-color: #f1f5f9; width: 30%;">Name:</td>
+          <td style="padding: 12px 16px;">${firstName} ${lastName}</td>
         </tr>
         <tr>
-          <td style="padding: 12px; font-weight: bold;">Phone:</td>
-          <td style="padding: 12px;">${phone}</td>
+          <td style="padding: 12px 16px; font-weight: bold; background-color: #f1f5f9;">Email:</td>
+          <td style="padding: 12px 16px;">${email}</td>
         </tr>
-        <tr style="background-color: #f1f5f9;">
-          <td style="padding: 12px; font-weight: bold; vertical-align: top;">Message:</td>
-          <td style="padding: 12px; font-style: italic;">${message}</td>
+        <tr>
+          <td style="padding: 12px 16px; font-weight: bold; background-color: #f1f5f9;">Phone:</td>
+          <td style="padding: 12px 16px;">${phone}</td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 16px; font-weight: bold; background-color: #f1f5f9; vertical-align: top;">Message:</td>
+          <td style="padding: 12px 16px; font-style: italic;">${message}</td>
         </tr>
       </tbody>
     </table>
@@ -163,55 +168,14 @@ app.post("/api/schedule-consultation", async (req, res) => {
 
   </div>
   `,
+      attachments: [
+        {
+          filename: "newLogo.jpeg",
+          path: "./newLogo.jpeg",
+          cid: "logo", // Used in <img src="cid:logo"/>
+        },
+      ],
     });
-
-    //   await transporter.sendMail({
-    //     from: `"${process.env.LAW_FIRM_NAME}" <${process.env.EMAIL_USER}>`,
-    //     to: email,
-    //     subject: `Thank You for Reaching Out – ${process.env.LAW_FIRM_NAME}`,
-    //     html: `
-    // <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 20px auto; padding: 40px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
-    //   <header style="text-align: center; margin-bottom: 30px;">
-    //     <h1 style="margin: 0; font-size: 28px; color: #1e293b;">${
-    //       process.env.LAW_FIRM_NAME
-    //     }</h1>
-    //     <p style="font-size: 15px; color: #64748b;">Justice. Integrity. Expertise.</p>
-    //   </header>
-
-    //   <section>
-    //     <p style="font-size: 16px; color: #334155;">Dear <strong> ${firstName}</strong>,</p>
-    //     <p style="font-size: 16px; color: #334155; line-height: 1.6;">
-    //       Thank you for reaching out to <strong>${
-    //         process.env.LAW_FIRM_NAME
-    //       }</strong> for a legal consultation.
-    //       We have received your request and one of our representatives will contact you shortly to discuss your concern further.
-    //     </p>
-    //     <p style="font-size: 16px; color: #334155; line-height: 1.6;">
-    //       <strong>Your Message:</strong><br/>
-    //       <span style="font-style: italic; background-color: #f1f5f9; display: block; padding: 10px; border-radius: 6px; margin-top: 6px;">
-    //         ${message}
-    //       </span>
-    //     </p>
-
-    //     <p style="font-size: 16px; color: #334155; margin-top: 24px;">
-    //       If you have any urgent queries, feel free to call us at the contact number mentioned on our website.
-    //     </p>
-
-    //     <p style="font-size: 16px; color: #334155; margin-top: 24px;">
-    //       Best regards,<br/>
-    //       <strong>${process.env.LAW_FIRM_NAME}</strong><br/>
-    //       Legal Team
-    //     </p>
-    //   </section>
-
-    //   <footer style="margin-top: 40px; font-size: 13px; text-align: center; color: #94a3b8;">
-    //     &copy; ${new Date().getFullYear()} ${
-    //       process.env.LAW_FIRM_NAME
-    //     }. All rights reserved.
-    //   </footer>
-    // </div>
-    // `,
-    //   });
 
     await transporter.sendMail({
       from: `"${process.env.LAW_FIRM_NAME}" <${process.env.EMAIL_USER}>`,
