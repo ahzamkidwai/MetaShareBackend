@@ -114,7 +114,7 @@ app.post("/api/schedule-consultation", async (req, res) => {
       to: process.env.LAW_FIRM_EMAIL,
       subject: `New Consultation Request from ${firstName} ${lastName}`,
       html: `
-  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 12px auto; padding: 40px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 12px auto; padding: 40px; background-color: #0B1C2C; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); color: #D9E0E8;">
 
     <!-- Logo -->
     <div style="text-align: center; margin-bottom: 20px;">
@@ -124,45 +124,45 @@ app.post("/api/schedule-consultation", async (req, res) => {
     <!-- Header -->
     <header style="text-align: center; margin-bottom: 30px;">
       <h1 style="margin: 0; font-size: 32px; color: #CBA14A;">VidhiVidh</h1>
-      <p style="margin: 8px 0 0; font-style: italic; font-size: 16px; color: #64748b;">Justice, Integrity, Expertise</p>
+      <p style="margin: 8px 0 0; font-style: italic; font-size: 16px; color: #D1D5DB;">Justice, Integrity, Expertise</p>
     </header>
 
     <!-- Title -->
     <section>
-      <h2 style="color: #0f172a; font-size: 24px; margin-bottom: 10px;">📩 New Client Consultation Request</h2>
-      <p style="font-size: 16px; color: #334155; margin-bottom: 20px;">You’ve received a new consultation request from your website.</p>
+      <h2 style="color: #ffffff; font-size: 24px; margin-bottom: 10px;">📩 New Client Consultation Request</h2>
+      <p style="font-size: 16px; color: #D9E0E8; margin-bottom: 20px;">You’ve received a new consultation request from your website.</p>
     </section>
 
     <!-- Details Table -->
-    <table style="width: 100%; font-size: 16px; color: #1e293b; background-color: #ffffff; border-radius: 6px; border-collapse: collapse; overflow: hidden; border: 1px solid #e2e8f0;">
+    <table style="width: 100%; font-size: 16px; color: #ffffff; background-color: #1F2D3A; border-radius: 6px; border-collapse: collapse; overflow: hidden; border: 1px solid #CBA14A;">
       <tbody>
-        <tr>
-          <td style="padding: 12px 16px; font-weight: bold; background-color: #f1f5f9; width: 30%;">Name:</td>
+        <tr style="background-color: #14283c;">
+          <td style="padding: 12px 16px; font-weight: bold; color: #CBA14A; width: 30%;">Name:</td>
           <td style="padding: 12px 16px;">${firstName} ${lastName}</td>
         </tr>
         <tr>
-          <td style="padding: 12px 16px; font-weight: bold; background-color: #f1f5f9;">Email:</td>
+          <td style="padding: 12px 16px; font-weight: bold; color: #CBA14A;">Email:</td>
           <td style="padding: 12px 16px;">${email}</td>
         </tr>
-        <tr>
-          <td style="padding: 12px 16px; font-weight: bold; background-color: #f1f5f9;">Phone:</td>
+        <tr style="background-color: #14283c;">
+          <td style="padding: 12px 16px; font-weight: bold; color: #CBA14A;">Phone:</td>
           <td style="padding: 12px 16px;">${phone}</td>
         </tr>
         <tr>
-          <td style="padding: 12px 16px; font-weight: bold; background-color: #f1f5f9; vertical-align: top;">Message:</td>
+          <td style="padding: 12px 16px; font-weight: bold; color: #CBA14A; vertical-align: top;">Message:</td>
           <td style="padding: 12px 16px; font-style: italic;">${message}</td>
         </tr>
       </tbody>
     </table>
 
     <!-- Sent Time -->
-    <p style="margin-top: 20px; font-size: 14px; color: #64748b;">📅 Sent on: ${new Date().toLocaleString()}</p>
+    <p style="margin-top: 20px; font-size: 14px; color: #D1D5DB;">📅 Sent on: ${new Date().toLocaleString()}</p>
 
     <!-- Divider -->
-    <hr style="margin: 30px 0; border: none; border-top: 1px solid #e5e7eb;" />
+    <hr style="margin: 30px 0; border: none; border-top: 1px solid #CBA14A;" />
 
     <!-- Footer -->
-    <footer style="font-size: 14px; color: #475569; text-align: center;">
+    <footer style="font-size: 14px; color: #D1D5DB; text-align: center;">
       <p style="margin-top: 20px; font-size: 12px; color: #94a3b8;">&copy; ${new Date().getFullYear()} VidhiVidh Law Firm. All rights reserved.</p>
     </footer>
 
