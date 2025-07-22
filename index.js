@@ -165,41 +165,97 @@ app.post("/api/schedule-consultation", async (req, res) => {
   `,
     });
 
+    //   await transporter.sendMail({
+    //     from: `"${process.env.LAW_FIRM_NAME}" <${process.env.EMAIL_USER}>`,
+    //     to: email,
+    //     subject: `Thank You for Reaching Out – ${process.env.LAW_FIRM_NAME}`,
+    //     html: `
+    // <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 20px auto; padding: 40px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+    //   <header style="text-align: center; margin-bottom: 30px;">
+    //     <h1 style="margin: 0; font-size: 28px; color: #1e293b;">${
+    //       process.env.LAW_FIRM_NAME
+    //     }</h1>
+    //     <p style="font-size: 15px; color: #64748b;">Justice. Integrity. Expertise.</p>
+    //   </header>
+
+    //   <section>
+    //     <p style="font-size: 16px; color: #334155;">Dear <strong> ${firstName}</strong>,</p>
+    //     <p style="font-size: 16px; color: #334155; line-height: 1.6;">
+    //       Thank you for reaching out to <strong>${
+    //         process.env.LAW_FIRM_NAME
+    //       }</strong> for a legal consultation.
+    //       We have received your request and one of our representatives will contact you shortly to discuss your concern further.
+    //     </p>
+    //     <p style="font-size: 16px; color: #334155; line-height: 1.6;">
+    //       <strong>Your Message:</strong><br/>
+    //       <span style="font-style: italic; background-color: #f1f5f9; display: block; padding: 10px; border-radius: 6px; margin-top: 6px;">
+    //         ${message}
+    //       </span>
+    //     </p>
+
+    //     <p style="font-size: 16px; color: #334155; margin-top: 24px;">
+    //       If you have any urgent queries, feel free to call us at the contact number mentioned on our website.
+    //     </p>
+
+    //     <p style="font-size: 16px; color: #334155; margin-top: 24px;">
+    //       Best regards,<br/>
+    //       <strong>${process.env.LAW_FIRM_NAME}</strong><br/>
+    //       Legal Team
+    //     </p>
+    //   </section>
+
+    //   <footer style="margin-top: 40px; font-size: 13px; text-align: center; color: #94a3b8;">
+    //     &copy; ${new Date().getFullYear()} ${
+    //       process.env.LAW_FIRM_NAME
+    //     }. All rights reserved.
+    //   </footer>
+    // </div>
+    // `,
+    //   });
+
     await transporter.sendMail({
       from: `"${process.env.LAW_FIRM_NAME}" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: `Thank You for Reaching Out – ${process.env.LAW_FIRM_NAME}`,
       html: `
-  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 20px auto; padding: 40px; background-color: #f9fafb; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+  <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 700px; margin: 20px auto; padding: 40px; background-color: #0B1C2C; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); color: white;">
+    
+    <!-- Logo at the top -->
+    <div style="text-align: center; margin-bottom: 20px;">
+      <img src="cid:logo" alt="Law Firm Logo" style="width: 120px; height: auto;" />
+    </div>
+
     <header style="text-align: center; margin-bottom: 30px;">
-      <h1 style="margin: 0; font-size: 28px; color: #1e293b;">${
+      <h1 style="margin: 0; font-size: 28px; color: #CBA14A;">${
         process.env.LAW_FIRM_NAME
       }</h1>
-      <p style="font-size: 15px; color: #64748b;">Justice. Integrity. Expertise.</p>
+      <p style="font-size: 15px; color: #D1D5DB;">Justice. Integrity. Expertise.</p>
     </header>
 
     <section>
-      <p style="font-size: 16px; color: #334155;">Dear <strong> ${firstName}</strong>,</p>
-      <p style="font-size: 16px; color: #334155; line-height: 1.6;">
-        Thank you for reaching out to <strong>${
+      <p style="font-size: 16px; color: #D9E0E8;">Dear <strong>${firstName}</strong>,</p>
+      <p style="font-size: 16px; color: #D9E0E8; line-height: 1.6;">
+        Thank you for reaching out to <strong style="color: #CBA14A;">${
           process.env.LAW_FIRM_NAME
         }</strong> for a legal consultation. 
         We have received your request and one of our representatives will contact you shortly to discuss your concern further.
       </p>
-      <p style="font-size: 16px; color: #334155; line-height: 1.6;">
+      <p style="font-size: 16px; color: #D9E0E8; line-height: 1.6;">
         <strong>Your Message:</strong><br/>
-        <span style="font-style: italic; background-color: #f1f5f9; display: block; padding: 10px; border-radius: 6px; margin-top: 6px;">
+        <span style="font-style: italic; background-color: #1F2D3A; display: block; padding: 10px; border-radius: 6px; margin-top: 6px; color: white;">
           ${message}
         </span>
       </p>
 
-      <p style="font-size: 16px; color: #334155; margin-top: 24px;">
+      <p style="font-size: 16px; color: #D9E0E8; margin-top: 24px;">
         If you have any urgent queries, feel free to call us at the contact number mentioned on our website.
       </p>
 
-      <p style="font-size: 16px; color: #334155; margin-top: 24px;">
+      <p style="font-size: 16px; color: #D9E0E8; margin-top: 24px;">
         Best regards,<br/>
-        <strong>${process.env.LAW_FIRM_NAME}</strong><br/>
+        <strong style="color: #CBA14A;">${
+          process.env.LAW_FIRM_NAME
+        }</strong><br/>
         Legal Team
       </p>
     </section>
@@ -211,6 +267,13 @@ app.post("/api/schedule-consultation", async (req, res) => {
     </footer>
   </div>
   `,
+      attachments: [
+        {
+          filename: "newLogo.jpeg",
+          path: "./newLogo.jpeg",
+          cid: "logo", // Used in <img src="cid:logo" />
+        },
+      ],
     });
 
     res
